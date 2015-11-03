@@ -3,12 +3,14 @@ open util/boolean
 /*************************************************/
 /**                                                  ENTITIES                                                     **/
 /*************************************************/
-sig Taxi {
-	seats: some Seat,
+abstract sig TaxiStatus {}
+one sig Available, Shared, Busy {}
+
+some sig Taxi {
+	passengers: some Passenger,
 	driver: one TaxiDriver,
-	available: one Bool,
-	shared: one Bool,
-	location: one Zone
+	status: one TaxiStatus,
+	location: one Place
 }
 
 sig Ride{
@@ -19,58 +21,66 @@ sig Ride{
 }
 
 sig Reservation{
+	owner: one Passenger,
 	users: some Passenger,
-	origin: one Zone,
-	destination: one Zone
+	origin: one Place,
+	destination: one Place
 }
 
-sig Zone{
+sig Zone {
 	places: some Place
 }
 
-sig Place{
-	name: one String
+sig Place {
 }
-
-sig Seat{}
 
 /*************************************************/
 /**                                            USER  ENTITIES                                                **/
 /*************************************************/
 abstract sig User {}
-sig TaxiDriver extends User{
+
+sig TaxiDriver extends User {
 	taxi: one Taxi
 }
 
 sig Passenger extends User  {
-	taxi: lone Taxi,
-	seat: lone Seat
-}
-
-sig Administrator extends User {
+	taxi: lone Taxi
 }
 
 /*************************************************/
 /**                                FUNCTIONS & PREDICATES                                         **/
 /*************************************************/
 
-fun passengersInTaxi[t:Taxi] : set Passenger {
-	//t.seats.
-}
-
 // A TaxiDriver Cannot be a Passenger (if is working?!)
-// 
+
+// Reservations from the same user must not temporally overlap
+
 
 pred show() {}
 
 /*************************************************/
 /**                                        ASSERTIONS  & FACTS                                        **/
 /*************************************************/
+
+fact MaximumTaxiSeats {
+//	no t: Taxi |  #(t.passengers) > 4
+}
+
+//  No reservation can have the same Passenger in both owner and users
+fact NoDuplicatePerson {
+//	no r:Reservation | r.owner  in  r.users
+}
+
+fact LoneTaxiForAPassenger {
+//	no p:Passenger | (p not in p.taxi.passengers)
+}
+
+
 fact AvailabilityPrinciple {
-	//no t: Taxi | t.available = True & (t.seats = 
+//	no t: Taxi | t.status = Available   && #(t.passengers) > 5
 }
 
 /*************************************************/
 /**                                               EXECUTION                                                    **/
 /*************************************************/
-run show for 2
+run show
