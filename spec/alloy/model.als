@@ -1,23 +1,31 @@
-open util/boolean
+open util/integer
 open mts/entities
 
 /*************************************************/
 /**                                                  ENTITIES                                                     **/
 /*************************************************/
+abstract sig Request {
+	owner: one Passenger,
+	users: some Passenger,
+	origin: one Place,
+	destination: one Place,
+	beginningTime:  one Int,
+	endingTime: one  Int
+}
 
+fact NoNegativeTime {
+	no r:Request | r.beginningTime < 0 || r.endingTime < 0
+}
+
+/*
 sig Ride {
 	owner: one Passenger,
 	means: one Taxi,
 	from: one Place,
 	to: one Place,
-}
+}*/
 
-sig Reservation {
-	owner: one Passenger,
-	users: some Passenger,
-	origin: one Place,
-	destination: one Place
-}
+
 
 
 /*************************************************/
@@ -37,7 +45,11 @@ pred show() {}
 
 //  No reservation can have the same Passenger in both owner and users
 fact NoDuplicatePerson {
-	no r:Reservation | r.owner  in  r.users
+	no r:Request | r.owner  in  r.users
+}
+
+fact TimeConsequency {
+	no r:Request | r.beginningTime >= r.endingTime
 }
 
 fact AvailabilityPrinciple {
@@ -47,4 +59,15 @@ fact AvailabilityPrinciple {
 /*************************************************/
 /**                                               EXECUTION                                                    **/
 /*************************************************/
-run show
+
+
+pred NoConcurrentRequests {
+	no r1, r2: Request | r1.owner = r2.owner && (r2.beginningTime =< r1.beginningTime && r2.endingTime >= r1.beginningTime)
+}
+
+pred DifferentDestination {
+	no r: Request | r.origin = r.destination
+}
+
+
+run DifferentDestination for 6 but 1 Taxi, 1 Zone, 3 Place
