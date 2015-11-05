@@ -8,6 +8,11 @@
  */
 open mts/entities
 
+sig Notification {
+	relatedRequest : one Request,
+	driver : one TaxiDriver
+}
+
 assert AcceptRegularDrive {
 	no t: Taxi | (t.status = Busy or t.status = Shared) // && new Request
 }
@@ -21,7 +26,7 @@ assert DeclineRide {
 }
 
 assert StartRide {
-	no ride: Ride, request: Request | ride.owner not in request.owner && ride.relatedRequest= request && request.relatedRide=Ride
+	no ride: Ride, request: Request | ride.owner not in request.owner
 }
 
 check StartRide
