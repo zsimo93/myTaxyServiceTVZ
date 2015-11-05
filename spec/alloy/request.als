@@ -2,7 +2,7 @@ open util/integer
 open mts/entities
 
 /*************************************************/
-/**                                                  ENTITIES                                                     **/
+/**                                                  DOMAIN                                                      **/
 /*************************************************/
 sig Request {
 	owner: one Passenger,
@@ -13,9 +13,6 @@ sig Request {
 	endingTime: one  Int
 }
 
-/*************************************************/
-/**                                        ASSERTIONS  & FACTS                                        **/
-/*************************************************/
 fact NoNegativeTime {
 	no r:Request | r.beginningTime < 0 || r.endingTime < 0
 }
@@ -42,13 +39,12 @@ pred DifferentDestination {
 /**                                           REQUIREMENTS                                                **/
 /*************************************************/
 // R.4.2.2.4.a : No requests overlapping from the same user 
-pred NoConcurrentRequests {
-	no r1, r2: Request |  r1.owner = r2.owner 
-		 && (r2.beginningTime =< r1.beginningTime 
-				&& (r2.endingTime >= r1.beginningTime || r2.endingTime = r1.endingTime)
-			)
-		//&& #Request > 1
+fact NoConcurrentRequests {
+	no disj r1, r2: Request |  r1.owner = r2.owner 
+		 && (r1.beginningTime =< r2.endingTime && r2.beginningTime =< r1.endingTime)
 }
+
+//check NoConcurrentRequests
 
 fact AtLeastOneRequest {
 	# Request > 1
@@ -60,4 +56,4 @@ fact AtLeastOneRequest {
 
 pred show{}
 
-run show for 6 but 1 Place, 1 Taxi, 3 Passenger
+run show for 6 but 1 Place, 1 Taxi, 3 Passenger, 4 Request

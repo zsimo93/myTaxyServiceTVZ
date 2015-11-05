@@ -22,6 +22,10 @@ some sig Taxi {
 	location: one Place
 }
 
+fact DriverUnicity {
+	all t: Taxi | t in t.driver.taxi
+}
+
 fact MaximumTaxiSeats {
 	no t: Taxi |  #(t.passengers) > 4
 }
