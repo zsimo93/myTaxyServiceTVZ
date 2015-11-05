@@ -4,6 +4,8 @@ open mts/timing
 /*************************************************/
 /**                                                  DOMAIN                                                      **/
 /*************************************************/
+let MIN_RESERVATION_OFFSET = 2 //Needed time between a reservation and the actual ride
+
 sig Request {
 	owner: one Passenger,
 	users: set Passenger,
@@ -14,7 +16,7 @@ sig Request {
 
 sig Reservation extends Request {}
 
-fact {all r:Reservation, n:Now | r.time.start >= n.start + 2}
+fact {all r:Reservation | r.time.start >= Now.start + MIN_RESERVATION_OFFSET }
 
 fact {all r1,r2: Request | r1.time = r2.time <=> r1 = r2}
 
@@ -33,20 +35,19 @@ pred DifferentDestination {
 /*************************************************/
 /**                                           REQUIREMENTS                                                **/
 /*************************************************/
-// R.4.2.2.4.a : No requests overlapping from the same user 
+// R.4.2.2.4.a : No requests overlapping from the same user.
 assert NoConcurrentRequests {
 	no disj r1, r2: Request |  r1.owner = r2.owner 
 		 && (r1.time = r2.time)
 }
 
-//
-assert RequestNewStandardRide {
-}
-
+// R.4.2.2.4.b-c , R.4.2.2.5.b-c
+assert RequestNewStandardRide {}
 assert RequestNewSharedRide {}
 
+//R.4.2.2.6.c : Booking time must be in the future within a month and at least 2 hour from actual time.
 assert BookNewRide {
-	
+	no r: Reservation | r.time = Now
 }
 
 assert LookRidesLog {} //Not checkable... i.e: not consistent with the model
@@ -58,6 +59,6 @@ assert LookRidesLog {} //Not checkable... i.e: not consistent with the model
 
 pred show{}
 
-check NoConcurrentRequests
+check BookNewRide
 
-run show for 6 but 1 Place, 1 Taxi, 3 Passenger, 4 Request
+run show

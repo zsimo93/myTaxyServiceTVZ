@@ -1,5 +1,14 @@
 module mts/timing
 
+/*
+ * Creates a single line of and provides some definitions of time intervals and instants
+ * together with basic operations among them.
+ *
+ * author: Ennio Visconti
+ * author: Simone Zocchi
+ * author: Khanh Huy Paolo Tran
+ */
+
 private open util/boolean
 
 sig TimeInterval{

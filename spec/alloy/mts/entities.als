@@ -9,6 +9,8 @@ module mts/entities
  * author: Khanh Huy Paolo Tran
  */
 
+private open mts/timing
+
 /*************************************************/
 /**                                       TAXI DEFINITIONS                                                  **/
 /*************************************************/
@@ -27,17 +29,15 @@ sig Ride {
 	means: one Taxi,
 	from: one Place,
 	to: one Place,
-	//sduration: one TimeInterval
+	duration: one TimeInterval
 }
+
+fact NoConcurrentRidesPerUser { no r1, r2: Ride | AreOverlapping[r1.duration, r2.duration] && r1.owner = r2.owner }
 
 // Domain Properties:
-fact DriverUnicity {
-	all t: Taxi | t in t.driver.taxi
-}
+fact DriverUnicity { all t: Taxi | t in t.driver.taxi }
 
-fact MaximumTaxiSeats {
-	no t: Taxi |  #(t.passengers) > 4
-}
+fact MaximumTaxiSeats { no t: Taxi |  #(t.passengers) > 4 }
 
 /*************************************************/
 /**                                        USER  DEFINITIONS                                              **/
