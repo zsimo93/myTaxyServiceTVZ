@@ -29,8 +29,25 @@ sig Ride {
 	means: one Taxi,
 	from: one Place,
 	to: one Place,
-	duration: one TimeInterval
+	duration: one TimeInterval,
+	relatedRequest: one Request
 }
+
+sig Request {
+	owner: one Passenger,
+	users: set Passenger,
+	origin: one Place,
+	destination: one Place,
+	time:  one TimeInstant,
+	relatedRide:lone Ride
+}
+
+sig Reservation extends Request {}
+
+// Ride & Request have same owner		
+fact RideRequestSameOwner {
+	all ride: Ride, request: Request | (request in ride.relatedRequest && ride in request.relatedRide) <=> (request.owner = ride.owner)
+}	
 
 fact NoConcurrentRidesPerUser { no r1, r2: Ride | AreOverlapping[r1.duration, r2.duration] && r1.owner = r2.owner }
 
@@ -41,15 +58,6 @@ fact MaximumTaxiSeats { no t: Taxi |  #(t.passengers) > 4 }
 
 let MIN_RESERVATION_OFFSET = 2 //Needed time between a reservation and the actual ride
 
-sig Request {
-	owner: one Passenger,
-	users: set Passenger,
-	origin: one Place,
-	destination: one Place,
-	time:  one TimeInstant
-}
-
-sig Reservation extends Request {}
 
 fact {all r:Reservation | r.time.start >= Now.start + MIN_RESERVATION_OFFSET }
 

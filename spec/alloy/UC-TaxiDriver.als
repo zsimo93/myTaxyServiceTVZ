@@ -21,7 +21,7 @@ assert DeclineRide {
 }
 
 assert StartRide {
-	no ride: Ride, request: Request | ride.owner not in request.owner
+	no ride: Ride, request: Request | ride.owner not in request.owner && ride.relatedRequest= request && request.relatedRide=Ride
 }
 
 check StartRide
