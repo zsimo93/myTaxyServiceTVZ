@@ -1,5 +1,5 @@
-open util/integer
 open mts/entities
+open mts/timing
 
 /*************************************************/
 /**                                                  DOMAIN                                                      **/
@@ -9,25 +9,20 @@ sig Request {
 	users: set Passenger,
 	origin: one Place,
 	destination: one Place,
-	beginningTime:  one Int,
-	endingTime: one  Int
+	time:  one TimeInstant
 }
 
-fact NoNegativeTime {
-	no r:Request | r.beginningTime < 0 || r.endingTime < 0
-}
+sig Reservation extends Request {}
+
+fact {all r:Reservation, n:Now | r.time.start >= n.start + 2}
+
+fact {all r1,r2: Request | r1.time = r2.time <=> r1 = r2}
+
+one sig MinTimeSpan extends TimeInterval {} { start = 0 && end = 2 }
 
 //  No reservation can have the same Passenger in both owner and users
 fact NoDuplicatePerson {
 	no r:Request | r.owner  in  r.users
-}
-
-fact TimeConsequency {
-	no r:Request | r.beginningTime >= r.endingTime
-}
-
-fact AvailabilityPrinciple {
-//	no t: Taxi | t.status = Available   && #(t.passengers) > 5
 }
 
 pred DifferentDestination {
@@ -39,21 +34,30 @@ pred DifferentDestination {
 /**                                           REQUIREMENTS                                                **/
 /*************************************************/
 // R.4.2.2.4.a : No requests overlapping from the same user 
-fact NoConcurrentRequests {
+assert NoConcurrentRequests {
 	no disj r1, r2: Request |  r1.owner = r2.owner 
-		 && (r1.beginningTime =< r2.endingTime && r2.beginningTime =< r1.endingTime)
+		 && (r1.time = r2.time)
 }
 
-//check NoConcurrentRequests
-
-fact AtLeastOneRequest {
-	# Request > 1
+//
+assert RequestNewStandardRide {
 }
+
+assert RequestNewSharedRide {}
+
+assert BookNewRide {
+	
+}
+
+assert LookRidesLog {} //Not checkable... i.e: not consistent with the model
+
 
 /*************************************************/
 /**                                               EXECUTION                                                    **/
 /*************************************************/
 
 pred show{}
+
+check NoConcurrentRequests
 
 run show for 6 but 1 Place, 1 Taxi, 3 Passenger, 4 Request

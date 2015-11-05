@@ -13,7 +13,7 @@ module mts/entities
 /**                                       TAXI DEFINITIONS                                                  **/
 /*************************************************/
 abstract sig TaxiStatus {}
-one sig Available, Shared, Busy {}
+one sig Available, Shared, Busy extends TaxiStatus{}
 
 some sig Taxi {
 	passengers: some Passenger,
@@ -22,6 +22,15 @@ some sig Taxi {
 	location: one Place
 }
 
+sig Ride {
+	owner: one Passenger,
+	means: one Taxi,
+	from: one Place,
+	to: one Place,
+	//sduration: one TimeInterval
+}
+
+// Domain Properties:
 fact DriverUnicity {
 	all t: Taxi | t in t.driver.taxi
 }
@@ -43,6 +52,7 @@ sig Passenger extends User  {
 	taxi: lone Taxi
 }
 
+// Domain Properties:
 fact LoneTaxiForAPassenger {
 	no p:Passenger | (p not in p.taxi.passengers)
 }
