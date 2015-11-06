@@ -45,6 +45,7 @@ assert LookRidesLog {} //Not checkable... i.e: not consistent with the model
 
 pred show{}
 
+check NoConcurrentRequests
 check BookNewRide
 
 run show

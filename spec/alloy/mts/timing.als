@@ -27,7 +27,7 @@ fact { Now.start = 0 && Now.end = 0 }
 
 /** Every TimeInterval must have a positive length **/
 fact PositiveLength {
-	TimeInterval.end >= TimeInterval.start
+	no t : TimeInterval | t.end < t.start
 }
 
 /** Returns true iff intervals overlap **/
