@@ -41,20 +41,35 @@ fact MaximumTaxiSeats { no t: Taxi |  #(t.passengers) > 4 }
 
 let MIN_RESERVATION_OFFSET = 2 //Needed time between a reservation and the actual ride
 
+
+/*************************************************/
+/**                                       REQUEST DEFINITIONS                                                  **/
+/*************************************************/
+
 sig Request {
 	owner: one Passenger,
 	users: set Passenger,
 	origin: one Place,
 	destination: one Place,
 	time:  one TimeInstant,
-	relatedRide: lone Ride
+	relatedRide: lone Ride,
+	relatedNotification: one Notification
 }
 
 sig Reservation extends Request {}
 
-// Ride & Request have same owner		
+
+sig Notification {
+	relatedRequest : one Request,
+	driver : one TaxiDriver
+}
+	
 fact RideRequestSameOwner {
 	all ride: Ride, request: Request | (request in ride.relatedRequest && ride in request.relatedRide) <=> (request.owner = ride.owner)
+}
+
+fact {
+	all n: Notification | n.driver.taxi = n.relatedRequest.relatedRide.means
 }
 
 fact {all r:Reservation | r.time.start >= Now.start + MIN_RESERVATION_OFFSET }
