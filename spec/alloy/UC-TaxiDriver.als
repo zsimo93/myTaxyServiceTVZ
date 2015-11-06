@@ -13,8 +13,15 @@ sig Notification {
 	driver : one TaxiDriver
 }
 
+fact  {
+	all  n: Notification, r: Request | n.relatedRequest = r <=> 
+		(r.relatedRide.means.status = Available)
+}
+
 assert AcceptRegularDrive {
-	no t: Taxi | (t.status = Busy or t.status = Shared) // && new Request
+	no t: Taxi, n:Notification, r:Request | (t.status = Busy or t.status = Shared) 
+									&& n.driver = t.driver 
+									&& n.relatedRequest = r
 }
 
 assert AcceptSharedDrive {
@@ -26,10 +33,10 @@ assert DeclineRide {
 }
 
 assert StartRide {
-	no ride: Ride, request: Request | ride.owner not in request.owner
+	no ride: Ride, request: Request | ride.owner not in request.owner  && ride.relatedRequest= request && request.relatedRide=Ride
 }
 
-check StartRide
+check AcceptRegularDrive
 
 assert FinishRide {
 	no t: Taxi | (t.status = Busy or t.status = Shared) // && already Started && don't finish if shared

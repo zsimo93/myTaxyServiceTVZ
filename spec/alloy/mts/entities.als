@@ -28,7 +28,8 @@ sig Ride {
 	means: one Taxi,
 	from: one Place,
 	to: one Place,
-	duration: one TimeInterval
+	duration: one TimeInterval,
+	relatedRequest: one Request
 }
 
 fact NoConcurrentRidesPerUser { no r1, r2: Ride | AreOverlapping[r1.duration, r2.duration] && r1.owner = r2.owner }
@@ -45,10 +46,16 @@ sig Request {
 	users: set Passenger,
 	origin: one Place,
 	destination: one Place,
-	time:  one TimeInstant
+	time:  one TimeInstant,
+	relatedRide: lone Ride
 }
 
 sig Reservation extends Request {}
+
+// Ride & Request have same owner		
+fact RideRequestSameOwner {
+	all ride: Ride, request: Request | (request in ride.relatedRequest && ride in request.relatedRide) <=> (request.owner = ride.owner)
+}
 
 fact {all r:Reservation | r.time.start >= Now.start + MIN_RESERVATION_OFFSET }
 
