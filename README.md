@@ -1,6 +1,6 @@
-# myTaxyServiceTVZ
+# myTaxiServiceTVZ
 Software Engineering 2 project
 
-#Documentation
+#Release
 
-The *RASD* draft can be found on [Authorea/RASD](https://www.authorea.com/users/70216/articles/83246/_show_article)
+Please to see the final documents, check out the Deliveries folder in the [Release](https://github.com/zsimo93/myTaxyServiceTVZ/tree/release) branch.
