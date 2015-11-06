@@ -1,0 +1,17 @@
+\subsection{Constraints}
+\subsubsection{Regulatory Policies}
+MyTaxyService will be released on Google Play Store, Apple App Store and Windows Store and so it must respect their market policies. 
+\subsubsection{Hardware Limitation}
+MyTaxyService will support only mobile devices newer then 2012.
+The mobile application will be suitable for devices with screen sizes starting from 4.2’
+\subsubsection{Interfaces to other applications}
+MyTaxyService is strongly dependent on MySQL as the main DBMS. It also uses PayPal as the only PSP. 
+\subsubsection{Parallel operation}
+MyTaxyService must support parallel operations coming from both Taxi Drivers and Passengers on the same DB.
+\subsubsection{Reliability requirements}
+
+\subsubsection{Criticality of the application}
+The application doesn't have a critical role inside the taxi system, since any of the actions done by MyTaxiService, can by accomplished by phone.
+\subsubsection{Safety and security considerations}
+Since the payments are processed externally and the data is handled by an external DBMS, there are no specific security issues.
+

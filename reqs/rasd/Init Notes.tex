@@ -1,0 +1,32 @@
+\section{Init Notes}
+
+\subsection{Global Aim:} Optimizing a large city's taxi service.
+
+\subsection{Detaild Aims:} \begin{enumerate}
+\item Simplify passengers' access to the service
+\item Guarantee a fair management of taxi queues
+\end{enumerate}
+
+\subsection{Domain Details:} \begin{itemize}
+\item Requests are made via Web/Mobile App
+\item Responses contain Taxi Code and Waiting Time 
+\item Taxi drivers publish their availability / confirmation via a Mobile App
+\item Queue Algorithm (\textit{Original quote:}) 
+\begin{quote}
+In	particular,	the	city	is	
+divided	in	 taxi	 zones	 (approximately	 2	 km2 each).	 Each	 zone	is	associated	 to	a	
+queue	of	taxis.	The	system	automatically	computes	the	distribution	of	taxis	in	the	
+various	zones	based	on	 the	GPS	information	it	receives	 from	each	 taxi.	When	a	
+taxi	is	available,	its	identifier	is	stored	in	the	queue	of	taxis	in	the	corresponding	
+zone.		
+When	a	 request	arrives	 from	a	certain	zone,	 the	system	 forwards	it	 to	 the	 first	
+taxi	 queuing	 in	 that	 zone.	 If	 the	 taxi	 confirms,	 then	 the	 system	 will	 send	 a	
+confirmation	to	the	passenger.	If	not,	then	the	system	will	forward	the	request	to	
+the	second	in	the	queue	and	will,	at	the	same	time,	move	the	first	taxi	in	the	last	
+position	in	the	queue.
+\end{quote}
+\item Public API (\textit{Note: Not really a "domain detail"})
+\item \textit{Part 2 and 3 coming soon...}
+\end{itemize}
+
+
