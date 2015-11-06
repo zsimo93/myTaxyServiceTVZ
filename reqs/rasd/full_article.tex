@@ -350,45 +350,6 @@ Additional domain properties:
 \end{enumerate}
 \end{itemize}
 
-\iffalse
-\item \textit{\textbf{Request a new standard taxi ride}} - \textbf{[Goal 3]}\\*
-A passenger can ask for an immediate ride. He will have to fill the following input information: starting point (automatically filled if GPS is enabled) and destination.\\
-Requirements:
-\begin{enumerate}
-\item A passenger must have not requested another taxi at the same time.
-\end{enumerate}
-Domain properties:
-\begin{enumerate}
-\item Starting place must be in the interested city.
-\item Destination place must be in the country.
-\end{enumerate}
-
-\item \textit{\textbf{Request a new shared taxi ride}} - \textbf{[G8]}\\*
-A passenger can ask for a shared taxi ride in order to save money or have company.\\
-Requirements:
-\begin{enumerate}
-\item A passenger must have not request another taxi at the same time.
-\end{enumerate}
-Domain properties:
-\begin{enumerate}
-\item Starting place must be in the interested city.
-\item Destination place must be in the country.
-\end{enumerate}
-
-\item \textit{\textbf{Book a new taxi ride}} - \textbf{[G6]}\\*
-A passenger can ask for a future ride. He will also have to add a date. The starting point's auto-fill is disabled.\\
-Requirements:
-\begin{enumerate}
-\item A passenger must have not request another taxi at the same time.
-\end{enumerate}
-Domain properties:
-\begin{enumerate}
-\item Starting place must be in the interested city.
-\item Destination place must be in the country.
-\item Booking time must be in the future within a month and at least 2 hour from actual time.
-\end{enumerate}
-\fi
-
 \item \textit{\textbf{Look rides log}} - \textbf{[G4]}\\
 A passenger can look at all his rides. They have a taxi ID (besides future rides), a fare (besides current and future rides), a starting and an ending place.\\
 Requirements:
@@ -423,38 +384,6 @@ Additional requirements:
 \item Taxi must not be \textit{shared}.
 \end{enumerate}
 \end{itemize}
-
-\iffalse
-\item \textit{\textbf{Accept a regular ride notification}} - \textbf{[G5]}\\*
-A taxi driver can accept a regular ride notification. The application will send the taxi data to the passenger and will prevent the driver to receive any other notification (\textit{lock}).\\
-Requirements:
-\begin{enumerate}
-\item The taxi related to the taxi driver is not locked or shared.
-\end{enumerate}
-Domain property:
-\begin{enumerate}
-\item Maximum number of passenger is 4.
-\end{enumerate}
-
-\item \textit{\textbf{Accept a shared ride notification}} - \textbf{[G5]}\\*
-A taxi driver can accept a shared ride notification. The application will send the taxi data to the passenger and will enable just the receiving of other shared ride (\textit{share lock}).\\
-Requirements:
-\begin{enumerate}
-\item No passenger must be in the car. Besides the first shared ride notification, the others are automatically accepted until the end of the ride.
-\item The taxi related to the taxi driver is not locked.
-\end{enumerate}
-Domain property:
-\begin{enumerate}
-\item Maximum number of passenger is 4.
-\end{enumerate}
-
-\item \textit{\textbf{Decline a ride}} - \textbf{[G5]}\\*
-A taxi driver can decline a ride request.\\
-Requirements:
-\begin{enumerate}
-\item Taxi must not be shared.
-\end{enumerate}
-\fi
 
 \item \textit{\textbf{Start a ride}}\\
 A taxi driver can start a ride for a passenger.\\
