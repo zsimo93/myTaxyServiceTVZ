@@ -1,4 +1,4 @@
-# myTaxyServiceTVZ
+# myTaxiServiceTVZ
 Software Engineering 2 project
 
 #Documentation
