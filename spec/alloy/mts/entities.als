@@ -8,10 +8,11 @@ module mts/entities
  * author: Simone Zocchi
  * author: Khanh Huy Paolo Tran
  */
+
 private open mts/timing
 
 /*************************************************/
-/**                                       TAXI DEFINITIONS                                                  **/
+/**                                   TAXI DEFINITIONS                                     **/
 /*************************************************/
 abstract sig TaxiStatus {}
 one sig Available, Shared, Busy extends TaxiStatus{}
@@ -32,9 +33,10 @@ sig Ride {
 	relatedRequest: one Request
 }
 
-fact NoConcurrentRidesPerUser { no r1, r2: Ride | AreOverlapping[r1.duration, r2.duration] && r1.owner = r2.owner }
+fact NoConcurrentRidesPerUser { 
+	no r1, r2: Ride | AreOverlapping[r1.duration, r2.duration] && r1.owner = r2.owner 
+}
 
-// Domain Properties:
 fact DriverUnicity { all t: Taxi | t in t.driver.taxi }
 
 fact MaximumTaxiSeats { no t: Taxi |  #(t.passengers) > 4 }
@@ -43,7 +45,7 @@ let MIN_RESERVATION_OFFSET = 2 //Needed time between a reservation and the actua
 
 
 /*************************************************/
-/**                                       REQUEST DEFINITIONS                                                  **/
+/**                               REQUEST DEFINITIONS                                  **/
 /*************************************************/
 
 sig Request {
@@ -65,19 +67,24 @@ sig Notification {
 }
 	
 fact RideRequestSameOwner {
-	all ride: Ride, request: Request | (request in ride.relatedRequest && ride in request.relatedRide) <=> (request.owner = ride.owner)
+	all ride: Ride, request: Request | (request in ride.relatedRequest 
+	&& ride in request.relatedRide) <=> (request.owner = ride.owner)
 }
 
-fact {
+fact TaxiNotificationRelation{
 	all n: Notification | n.driver.taxi = n.relatedRequest.relatedRide.means
 }
 
-fact {all r:Reservation | r.time.start >= Now.start + MIN_RESERVATION_OFFSET }
+fact MinimumReservationTime {
+	all r:Reservation | r.time.start >= Now.start + MIN_RESERVATION_OFFSET 
+}
 
-fact {all r1,r2: Request | r1.time = r2.time <=> r1 = r2}
+fact SameIntervalSameRequest {
+	all r1,r2: Request | r1.time = r2.time <=> r1 = r2
+}
 
 /*************************************************/
-/**                                        USER  DEFINITIONS                                              **/
+/**                                 USER  DEFINITIONS                                     **/
 /*************************************************/
 abstract sig User {}
 
@@ -89,13 +96,12 @@ sig Passenger extends User  {
 	taxi: lone Taxi
 }
 
-// Domain Properties:
 fact LoneTaxiForAPassenger {
 	no p:Passenger | (p not in p.taxi.passengers)
 }
 
 /*************************************************/
-/**                                  POSITIONING  DEFINITIONS                                       **/
+/**                          POSITIONING  DEFINITIONS                                **/
 /*************************************************/
 sig Zone {
 	places: some Place
