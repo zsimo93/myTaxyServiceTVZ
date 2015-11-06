@@ -1,0 +1,43 @@
+\section{Init Notes}
+
+\subsection{Global Aim:} Optimizing a large city's taxi service.
+
+\subsection{Detailed Aims:} \begin{enumerate}
+\item Simplify passengers' access to the service
+\item Guarantee a fair management of taxi queues
+\end{enumerate}
+
+\subsection{Domain Details:} \begin{itemize}
+\item Requests are made via Web/Mobile App
+\item Responses contain Taxi Code and Waiting Time 
+\item Taxi drivers publish their availability / confirmation via a Mobile App
+\item Queue Algorithm (\textit{Original quote:}) 
+\begin{quote}
+In	particular,	the	city	is	
+divided	in	 taxi	 zones	 (approximately	 2	 km2 each).	 Each	 zone	is	associated	 to	a	
+queue	of	taxis.	The	system	automatically	computes	the	distribution	of	taxis	in	the	
+various	zones	based	on	 the	GPS	information	it	receives	 from	each	 taxi.	When	a	
+taxi	is	available,	its	identifier	is	stored	in	the	queue	of	taxis	in	the	corresponding	
+zone.		
+When	a	 request	arrives	 from	a	certain	zone,	 the	system	 forwards	it	 to	 the	 first	
+taxi	 queuing	 in	 that	 zone.	 If	 the	 taxi	 confirms,	 then	 the	 system	 will	 send	 a	
+confirmation	to	the	passenger.	If	not,	then	the	system	will	forward	the	request	to	
+the	second	in	the	queue	and	will,	at	the	same	time,	move	the	first	taxi	in	the	last	
+position	in	the	queue.
+\end{quote}
+\item Public API (\textit{Note: Not really a "domain detail"})
+\item \textbf{Part 2:} A user can reserve a taxi by specifying origin and destination.
+    A reservation( $ r:O \rightarrow D  $):
+    \begin{itemize}
+\item \textbf{MUST} occur at least 2 hours before.
+\item Is confirmed to the user by the system, which allocates a taxi 10 mins before.
+\end{itemize}
+\item \textbf{Part 3:} A \textbf{sharing option} must be available, which:
+\begin{itemize}
+\item It gives the possibility to share the reservation and the costs.
+\item It requires the user to specify the destination of all rides it wants to share.
+\item The system will find other users in the same zone, calculate the fee and notify the users.
+\end{itemize}
+\end{itemize}
+
+
