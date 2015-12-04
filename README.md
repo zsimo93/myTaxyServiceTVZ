@@ -1,12 +1,16 @@
 # myTaxiServiceTVZ
 Software Engineering 2 project
 
-#Documentation
-
-The *RASD* draft can be found on [sharelatex](https://www.sharelatex.com/project/56374f7c294753ac3f015b5e)
 
 
-#Time Spent 
+
+
+#Time Spent RASD
 * Ennio : ~25h
 * Simone : ~28h
 * Paolo : ~28h
+
+#Time Spent DD
+* Ennio : ~30h
+* Simone : ~35h
+* Paolo : ~29h
