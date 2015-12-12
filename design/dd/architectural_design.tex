@@ -1,0 +1,316 @@
+\section{Architectural Design}
+
+\subsection{Overview}
+This section contains all the architectural views with their respective low level descriptions and related diagrams.
+
+\subsection{High level components and their interactions}
+
+The following block diagram presents the overall structure of the system we are going to describe.
+It is composed of a front end side, with a common layer and two more specific layers: one is specific to mobile and the other is to the web.
+The back end side presents the main application layer that provides the public API available for third party applications which is also used for the communication with the front end. It also presents a data abstraction layer to access information stored in the DBs.
+
+\begin{figure}[]
+        \centering
+        \includegraphics[width=1\columnwidth]{HighLevelBlocchiDiagram}
+        \caption{High Level Block Diagram}
+        \label{fig:blockDiagram}
+\end{figure}
+\newpage
+\subsection{Component view}
+
+\subsubsection{Front end}
+
+\begin{figure}[h!]
+        \centering
+        \includegraphics[width=1.05\columnwidth]{ComponentDiagramFront}
+        \caption{UML Component diagram - Front end side}
+        \label{fig:ComponentFront}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{Controller}: prototype of a generic controller, it summarizes all the generic interactions between client side UI and specific components, together with routing logic and view engine.
+
+\item \textbf{UI}: view generic component. It consists of all the graphical elements which are called by the \textit{controller} (and particularly by the view engine).
+
+\item \textbf{Maps manager}: it calls Google Maps API to show the path on screen.
+
+\item \textbf{Positioning system}: it updates the position of the device invoking the GPS drivers.
+
+\item \textbf{Request framework}: it manages the outgoing messages for the client side.
+
+\item \textbf{Notifications manager}: it manages the incoming messages for the client side.
+\end{itemize}
+
+\subsubsection{Back end}
+
+\begin{figure}[h!]
+        \centering
+        \includegraphics[width=1\columnwidth]{ComponentDiagramBack}
+        \caption{UML Component diagram - Back end side}
+        \label{fig:ComponentBack}
+\end{figure}
+
+\begin{itemize}
+
+\item \label{itm:auth-mgr}\textbf{Authentication manager}: it's delegated to execute users' login and to authenticate incoming messages. It also has to manage the registration process itself.
+
+\item \label{itm:comm-mgr}\textbf{Communication manager}: it manages all the ingoing and outgoing notifications and messages to and from taxi drivers and passengers.
+
+\item \label{itm:pmnt-mgr}\textbf{Payments manager}: it is held responsible for calculating the fare for the ride and for using the PayPal APIs for payments through the PSP.
+
+\item \textbf{Taxi manager}:
+\begin{itemize}
+
+\item \label{itm:taxiq-mgr} \textbf{Taxi queue manager}: it has to build and manage dynamic queues and to change taxis' states.
+
+\item \label{itm:rides-mgr} \textbf{Rides manager}: it manages all the ongoing rides, the start and stop process.
+
+\item \label{itm:reqs-mgr}\textbf{Request manager}: it manages all rides' requests from passengers. It contains queues for immediate and future requests.
+
+\item \label{itm:path-calc} \textbf{Path calculator}: it manages the interaction with the Google Maps APIs to compute paths and tries to match a shared ride path with a new shared ride request's path.
+
+\item \label{itm:zone-mgr} \textbf{Zone manager}: it manages the static queues. It collects the taxi positions and it puts them in the correct queue.
+\end{itemize}
+
+\item All the components in the \textbf{Data Abstraction Layer} represent the main entity of the DB.
+
+\end{itemize}
+
+\subsection{Deployment view}
+In this section it will be shown a software's Deployment Diagram that describes the hardware level.\\
+It has been adopted a 3-tier architectural model. There is a data tier with two different databases: a legacy one which contains taxis and drivers and a new one which contains reservations and passengers.\\
+The middle layer is the logic tier which contains all the application logic. It runs on Windows Server 2008 R2.\\
+The presentation for the mobile application is entirely on the client device whereas for a web access, it is split between the client device and on the web server. So the presentation tier lies between the client layer (device applications) and the web server layer (application server).
+
+\begin{figure}[]
+        \centering
+        \includegraphics[width=1\columnwidth]{DeploymentDiagram}
+        \caption{UML Deployment Diagram}
+        \label{fig:deployment}
+\end{figure}
+
+\newpage
+
+\subsection{Runtime view}
+
+This section contains some Sequence Diagrams of the application.\\
+In particular it shows what happens whenever:
+\begin{itemize}
+\item A request arrives in the server;
+\item the taxi driver receives a notification for a ride;
+\item a request has to be handled by the request manager.
+\end{itemize}
+
+\begin{figure}[]
+        \centering
+        \includegraphics[width=1\columnwidth]{SequenceRequestEnqueue}
+        \caption{UML Sequence Diagram: Request arrival}
+        \label{fig:enqueue}
+\end{figure}
+
+\begin{figure}[]
+        \centering
+        \includegraphics[width=1\columnwidth]{SequenceDriverRide}
+        \caption{UML Sequence Diagram: Ride notification}
+        \label{fig:driverReq}
+\end{figure}
+
+\begin{landscape}
+\begin{figure}[]
+        \centering
+        \includegraphics[width=1\columnwidth]{SequenceRequestServer}
+        \caption{UML Sequence Diagram: Request handling}
+        \label{fig:hendleRequest}
+\end{figure}
+\end{landscape}
+
+\subsection{Component interfaces}
+\subsubsection{Internal interfaces - Front End}
+
+\begin{itemize}
+\item \textbf{Request framework}:\\
+Requires:
+\begin{itemize}
+\item \textit{messageInterface}: possibility to send messages from the back end
+\end{itemize} 
+Provides:
+\begin{itemize}
+\item \textit{myTaxiServiceAPI}: method to communicate with the mobile and web subsystems
+\end{itemize}
+
+\item \textbf{Notification manager}:\\
+Requires:
+\begin{itemize}
+\item \textit{messageInterface}: possibility to receive messages from the back end
+\end{itemize} 
+Provides:
+\begin{itemize}
+\item \textit{myTaxiServiceAPI}: method to communicate with the mobile and web subsystems
+\end{itemize}
+
+\item \textbf{Controller (web or mobile)}:\\
+Requires:
+\begin{itemize}
+\item \textit{messageInterface}: an interface to the common front end layer in order to send or receive message from the back end
+\end{itemize}
+
+\item \textbf{Map manager}:\\
+Requires:
+\begin{itemize}
+\item \textit{showMap}: access to GoogleMaps API to display the maps and the paths
+\end{itemize}
+
+\item \textbf{Positioning}:\\
+Requires:
+\begin{itemize}
+\item \textit{position}: access to the device position
+\end{itemize}
+
+\item \textbf{GPS drivers}:\\
+Provides:
+\begin{itemize}
+\item \textit{position}: method that gives the device position
+\end{itemize}
+
+\end{itemize}
+
+\subsubsection{Internal interfaces - Back End}
+
+\begin{itemize}
+\item \textbf{Taxi queue manager}:\\
+Requires:
+\begin{itemize}
+\item \textit{findQueue}: access to the static queues
+\end{itemize}  
+Provides:
+\begin{itemize}
+\item \textit{findTaxi}: method to build a new dynamic queue and look for a taxi
+\item \textit{updateTaxiState}: method to change a taxi state
+\end{itemize}
+	
+\item \textbf{Request manager}:\\
+Requires:
+\begin{itemize}
+\item \textit{findTaxi}: access to taxi list in order to look for a taxi
+\item \textit{updateTaxiState}: access to taxi list in order to update a taxi state at the ride's creation
+\end{itemize}  
+Provides:
+\begin{itemize}
+\item \textit{enqueueRequest}: method to create a request and enqueue it
+\end{itemize}
+
+\item \textbf{Path calculator}:\\
+Provides:
+\begin{itemize}
+\item \textit{pathCalculation}: method to calculate a path for a shared ride 
+\end{itemize}
+
+\item \textbf{Ride manager}:\\
+Requires:
+\begin{itemize}
+\item \textit{updateTaxiState}: possibility to change the taxi state after a ride's ending
+\item \textit{PayPalPayment}: possibility to pay with PayPal
+\item \textit{calculateFare}: possibility to calculate a ride's fare
+\end{itemize} 
+Provides:
+\begin{itemize}
+\item \textit{manageRide}: method in order to start and end a ride
+\end{itemize}
+
+\item \textbf{Authentication manager}:\\ 
+Provides:
+\begin{itemize}
+\item \textit{authenticateRegister}: method to authenticate a request, log in and register visitors
+\end{itemize}
+
+\item \textbf{Communication manager}:\\
+Requires:
+\begin{itemize}
+\item \textit{authenticateRegister}: possibility to authenticate a request, log in and register visitors
+\item \textit{updateTaxiPosition}: possibility to know a taxi position
+\item \textit{enqueueRequest}: possibility to create and enqueue a request
+\item \textit{manageRide}: possibility to start and end a ride
+\end{itemize}
+
+\item \textbf{Payment manager}:\\
+Provides:
+\begin{itemize}
+\item \textit{calculateFare}: method to calculate a ride's fare
+\item \textit{PayPalPayment}: method to pay with PayPal
+\end{itemize}
+
+\item \textbf{Zone manager}:\\
+Provides:
+\begin{itemize}
+\item \textit{updateTaxiPosition}: method to update a taxi position
+\item \textit{findQueue}: method to find all the zones' queues
+\end{itemize}
+
+\end{itemize}
+
+\subsubsection{Public API}
+
+\begin{myfontAPI}
+{\renewcommand{\arraystretch}{1.7}
+\begin{tabularx}{\textwidth}{| l | X | X | c |}
+\hline 
+\textbf{Method} &  \textbf{URL}   & \textbf{Usage} & \textbf{Return}\\ 
+\hline 
+
+PUT      & /request?x=\{xcoord\}\& y=\{ycoord\}\&time=\{time\}\& seats=\{nseats\}       & Insert a new request       &  -\\
+\hline 
+GET      & /request/\{id\}   &  Retrieves a request by id &  request \\
+\hline 
+POST     & /request/\{id\}/edit  &  Edits the request    &  -\\
+\hline 
+DELETE   & /request/\{id\}/delete   &  Delete the request    &  -\\
+\hline 
+GET      & /me             &  Retrieves the user's profile   & user\\
+\hline 
+POST     & /me/edit             &  Edits the user's profile   & -\\
+\hline 
+GET      & /ride/\{id\}/fare &  Calculate the fare for the given ride   &  fare\\
+\hline 
+GET      &       /taxi?xcoord=\{x\}\& y=\{ycoord\}  &  Searches a taxi for the given location   &  taxi\\
+\hline 
+GET      &       /taxi/shared?x=\{xcoord\}\& y=\{ycoord\}  &  Searches a shared taxi for the given location   &  taxi\\
+\hline
+POST     & /api/token      &  Gets an access token      & token \\
+\hline
+
+
+%x/{xcoord}/y/{ycoord}/time/{time}/seats/{seatsnum}%
+\end{tabularx}}
+
+\end{myfontAPI} 
+
+
+
+\subsection{Selected architectural styles and patterns}
+List of selected architectural styles:
+\begin{itemize}
+\item \label{itm:client-server} \textbf{Client - Server}: the application is based on a client-server architecture. The requests are sent by the client which is the passenger. Then they are processed by the server which will communicate with a taxi driver, considered as a client.\\
+Rides management are also based on client - server architecture (taxi driver will confirm the begin and the end of a ride to a server).
+\item \label{itm:pubsub} \textbf{Publisher - Subscriber}: the notification system is based on this style. The passenger and driver sides are subscribed and the notifications are sent asynchronously to them.
+\item \label{itm:mvc} \textbf{MVC}: the application's design is based on a MVC pattern. This makes the separation of concerns possible. More in details it builds a clear distinction between the data models with their database interactions and the logic part.
+\item \label{itm:dto} \textbf{DTO}: the application is also based on a DTO architectural pattern. It is used for the request handling.
+\end{itemize}
+List of selected design patterns:
+\begin{itemize}
+\item \label{itm:singleton} \textbf{Singleton}: the \textit{request manager} will be instantiated as a singleton.
+\item \label{itm:observer} \textbf{Observer}: the observer pattern is used upon request handling and calling the ride manager. In particular is useful at a reservation timer's ending.
+\item \label{itm:factory} \textbf{Factory method}: the factory method pattern is used to create new requests and new rides. It helps to not specify the request type immediately.
+\item \label{itm:visitor} \textbf{Visitor}: this pattern permits to select the right algorithm during a taxi search for based on the request kind. Specifically it's used between the \textit{requirements manager} and the \textit{taxi queue manager}.
+
+\end{itemize}
+
+
+\subsection{Other design decisions}
+The taxi management is implemented using two different types of queues: static and dynamic.
+\begin{itemize}
+\item The \textit{static queues} are associated to a specific zone and contain taxis that are physically in the relevant city area. These queues are managed by the \textit{Zone Manager} component that updates in real time the taxi position inside the queues gathering their GPS position.
+\item The \textit{dynamic queues} are built when a request is dispatched to the system from the \textit{Taxi Queue Manager} component. The area associated to the zone is of 2 km$^2$ around the position indicated in the request. The taxis for the queue are taken from the static queue that overlap the dynamic area just built.
+\end{itemize}
+The requests are managed using queues as well.\\
+If the incoming request is a reservation, it is stored in a specific reservations queue. A thread puts the reservation in the immediate requests list when there are 10 minutes left to reservation time.\\
+The immediate requests are saved in another immediate requests queue and whenever an element is added to the latter it's popped and managed.

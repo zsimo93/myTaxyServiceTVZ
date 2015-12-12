@@ -1,0 +1,132 @@
+% --------------------------------------------------
+% PLEASE REMEMBER TO UPDATE TIME SPENT IN time.tex
+% --------------------------------------------------
+
+\section{Algorithm Design}
+
+This sections present some algorithms used within the application.
+
+\subsection{Taxi search for algorithm}
+
+\subsubsection{Standard Taxi Request}
+The following algorithm looks for all the taxis nearby the request's location and chooses the nearest available, preferring the ones which are in the request's zone.
+
+\begin{algorithm}[]
+\begin{algorithmic}[1]
+
+\Function{StandardTaxiRequest}{passenger, r}
+\State $ b = \Call{CircularBall}{passenger.{\bf x}, r}$ \Comment returns the list of close enough and available taxis
+    \If {b.isEmpty()}
+        \State \Return \Call{StandardTaxiRequest}{passenger, $ r + \epsilon $}
+    \Else
+        \For {t in b}
+            \If {t.zone == passenger.zone}
+                \State \Return t
+            \EndIf
+        \EndFor
+        \State \Return b[0];
+    \EndIf
+\EndFunction
+
+\end{algorithmic}
+\caption{
+    \label{alg:stdreqhandler} Request Handling Algorithm}
+\end{algorithm}
+
+
+\subsubsection{Shared Taxi Request}
+The following algorithm given the ideal path to passenger's destination, for each point of the path it calculates the distance from every shared taxi's path.\\
+At the end it sorts the list of available shared taxis by decreasing distance and it takes the first if the taxi doesn't exceed the maximum passenger's number allowed. If it does and there are no other shared taxi in the list, the regular request algorithm is called instead.
+
+\begin{algorithm}[]
+\begin{algorithmic}[1]
+
+\Function{SharedTaxiRequest}{passenger, r}
+
+\State $ s = \Call{SharedTaxisAvailable}{}$ \Comment returns the array of all available shared taxis
+
+\State $ ip = \Call{IdealPath}{passenger.{\bf x}, passenger.destination.{\bf x}}$ 
+
+\For {p in ip}
+   \State $ b = \Call{CircularBallShared} {p.{\bf x}, r} $
+   \For{t in b}
+        \State $ s[t] = s[t] + \Call{Distance}{p, t.path}$
+   \EndFor
+\EndFor
+   \State s.\Call{SortDescending}{}%
+   \For{t.distance in s}
+       \If{t.distance $<$= MAX\_DISTANCE \&\& t.distance != 0}
+            \State \Return t
+        \EndIf
+   \EndFor
+   \State \Return \Call{StandardTaxiRequest}{passenger, r}
+\EndFunction
+
+\end{algorithmic}
+\caption{
+    \label{alg:shdreqhandler} Shared Request Handling Algorithm}
+\end{algorithm}
+
+\newpage
+
+\subsection{Fare calculation for taxi rides}
+The following algorithm is used to calculate the fare for a ride when it's terminated.\\
+\textit{currentRide} is a parameter which represents the terminated ride for which the fare calculation is required.\\
+\textit{otherRide} is a list containing the other shared rides of the taxi's current trip that hasn't ended before the beginning of \textit{currentRide}. It is empty in a regular ride's case.\\
+A ride has the starting and the ending time (if ended).\\
+\textit{next} function finds the following instant to the one passed as parameter. In this particular algorithm the temporal instants are just starting or ending time of a ride.\\
+The algorithm is based on the number of passengers on board and the time interval of the ride.
+
+
+\begin{algorithm}
+\begin{algorithmic}[1]
+\Function{CalculateFare}{currentRide, otherRides:List} 
+\State $totPass = currentRide.pass$
+\State $fare = 0$
+\State $currT = currentRide.start$
+\State $nextT = \Call{next}{currT}$ 
+\For{$ride$ \textbf{in} $otherRides$} \Comment{Update totPass to the number of passenger onboard at the beginning of the ride in object}
+    \If{$ride.start < currentRide.start$}
+        \State $totPass = totPass + ride.pass$
+    \EndIf
+\EndFor
+\While{$nextT != currentRide.end$}
+    \State $c = \Call{Cost}{currT}$\Comment{Return the cost per minute depending on specific polices}
+    
+    \State $fare = fare + (nextT - currT) * c * currentRide.pass / totPass$
+    
+    \State $fare = fare + fare * k$
+    \If{$nextT$ is the end time of one of the ride $r$ in otherRide}
+        \State $totPass = totPass - r.pass$
+    \EndIf
+    
+    \If{$nextT$ is the start time of one of the ride $r$ in otherRide}
+        \State $totPass = totPass + r.pass$
+    \EndIf
+    
+    \State $currT = nextT$
+    \State $nextT = \Call{next}{currT}$
+
+\EndWhile
+
+\State $fare = fare + (nextT - currT) * c * currentRide.pass / totPass$
+
+\State \Return $fare$
+
+\EndFunction
+
+\end{algorithmic}
+\caption{
+    \label{alg:reqfare} Fare Algorithm}
+\end{algorithm}
+
+
+
+\begin{comment}
+\For{$ride$ \textbf{in} $otherRides$} \Comment{Ignore Ride ended before the current one started}
+    \If{$ride.end < currentRide.start$}
+        ride.ignore();
+    \EndIf
+\EndFor
+
+\end{comment}

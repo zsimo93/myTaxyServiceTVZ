@@ -57,7 +57,7 @@ It will also provide an interface for the taxi drivers, in order to communicate 
 \begin{itemize}
 \item \textbf{ETA}: Estimated Time of Arrival
 \item \textbf{EWT}: Estimated Waiting Time
-\item \textbf{DB}: Database
+\item \textbf{DB}: DataBase
 \item \textbf{DBMS}: DataBase Management System
 \item \textbf{PSP}: Payment Service Provider
 \item \textbf{UML}: Unified Modeling Language
@@ -100,7 +100,7 @@ The document is organized into 5 parts:
 The name of the application is \textit{MyTaxiService}.
 The pre-existent taxi service system consists of databases containing taxis and drivers.
 The users interact with the system from different operating systems both on desktop and mobile devices.
-Supported mobile devices are only limited to those having one of the following operating systems, screen sizes or browser:
+Supported mobile devices are only limited to those having one of the following operating systems or browser:
 \begin{itemize}
 \item Mobile:
 \begin{itemize}
@@ -167,6 +167,8 @@ Since the payments are processed externally and the data is handled by an extern
 \item Web and mobile applications have the same functionalities aside the registration that is only available on the web.
 \item \textbf{Users have a GPS-enabled devices}.
 \item \textbf{At least a taxi is always available for a passenger}. It's not mandatory that it's available in the passenger request's area.
+\item \textbf{A taxi returns in the city if the end of his previous ride is outside the city}.
+\item \textbf{The division into zones is given from the city management}.
 \end{itemize}
 
 \subsection{Goals}
@@ -179,6 +181,7 @@ Since the payments are processed externally and the data is handled by an extern
 \item {[}G6{]} Allow passengers to reserve a taxi for a certain time and place (origin and destination).
 \item {[}G7{]} Send a confirm notification to the passenger and make a taxi \textit{busy} at least 10 minutes before the reservation time.
 \item {[}G8{]} Allow a passenger to choose a shared ride.
+\item {[}G9{]} Manage the taxis in order to minimize the waiting time of the passengers and the inactivity of the taxi drivers.
 \end{itemize}
 
 \subsection{Apportioning of requirements}
@@ -405,6 +408,7 @@ A taxi driver can accept a ride notification. The application will show taxi inf
 Requirements:
 \begin{enumerate}
 \item The taxi related to the driver is not \textit{busy} or \textit{shared}.
+\item The taxi driver must answer the call otherwise after 15 seconds the call is automatically refused.
 \end{enumerate}
 Domain property:
 \begin{enumerate}
@@ -424,38 +428,6 @@ Additional requirements:
 \end{enumerate}
 \end{itemize}
 
-\iffalse
-\item \textit{\textbf{Accept a regular ride notification}} - \textbf{[G5]}\\*
-A taxi driver can accept a regular ride notification. The application will send the taxi data to the passenger and will prevent the driver to receive any other notification (\textit{lock}).\\
-Requirements:
-\begin{enumerate}
-\item The taxi related to the taxi driver is not locked or shared.
-\end{enumerate}
-Domain property:
-\begin{enumerate}
-\item Maximum number of passenger is 4.
-\end{enumerate}
-
-\item \textit{\textbf{Accept a shared ride notification}} - \textbf{[G5]}\\*
-A taxi driver can accept a shared ride notification. The application will send the taxi data to the passenger and will enable just the receiving of other shared ride (\textit{share lock}).\\
-Requirements:
-\begin{enumerate}
-\item No passenger must be in the car. Besides the first shared ride notification, the others are automatically accepted until the end of the ride.
-\item The taxi related to the taxi driver is not locked.
-\end{enumerate}
-Domain property:
-\begin{enumerate}
-\item Maximum number of passenger is 4.
-\end{enumerate}
-
-\item \textit{\textbf{Decline a ride}} - \textbf{[G5]}\\*
-A taxi driver can decline a ride request.\\
-Requirements:
-\begin{enumerate}
-\item Taxi must not be shared.
-\end{enumerate}
-\fi
-
 \item \textit{\textbf{Start a ride}}\\
 A taxi driver can start a ride for a passenger.\\
 Requirements:
@@ -473,6 +445,25 @@ Requirements:
 
 \end{enumerate}
 
+\subsubsection{General management}
+\begin{enumerate}
+\item \textit{\textbf{Queue management}} - \textbf{[G9]}
+The application must manage a fair queue management through two kinds
+of zones.\\
+\textit{Static zones} are given from the city management and they have a taxi queue. Depending on the statistical request average, the queue is longer or shorter.\\
+\textit{Dynamic zones} are made on a ride’s creation and based on the request’s location.\\
+More details about queue management algorithms are shown on the next
+document about design.\\
+Requirements:
+\begin{enumerate}
+\item A taxi is stored in one and only one queue.
+\item A taxi has one and only one status.
+\end{enumerate}
+Domain properties:
+\begin{enumerate}
+\item A queue is associated to one and only one zone
+\end{enumerate}
+\end{enumerate}
 
 
 \subsection{Use Cases}
@@ -741,7 +732,7 @@ The system looks for a taxi in the nearest areas around the interested one.\\
 
 \section{Appendix}
 
-\subsection{Class Diagram}
+\subsection{Class Diagram}z
 \begin{figure}[h!]
         \centering
         \includegraphics[width=1\columnwidth]{classDiagram/Class-Diagram}
@@ -839,6 +830,41 @@ alloy worlds results.
     \end{figure}
 
 \end{landscape}
+
+\section{Review}
+
+\begin{itemize}
+
+\item {[}2.5{]} A taxi returns in the city if the end of his previous ride is outside the city.
+
+\item {[}2.5{]} The division into zones is given from the city management.
+
+\item {[}2.6{]} [G9] Manage the taxis in order to minimize the waiting time of the passengers and the inactivity of the taxi drivers.
+
+\item {[}4.2{]} \textit{\textbf{Queue management}} - \textbf{G9}\\
+The application must manage a fair queue management through two kinds of zones.\\
+\textit{Static zones} are given from the city management and they have a taxi queue. Depending on the statistical request average, the queue is longer or shorter.\\
+\textit{Dynamic zones} are made on a ride's creation and based on the request's location.\\
+More details about queue management algorithms are shown on the next document about design.\\
+
+Requirements:
+\begin{enumerate}[label=(\alph*)]
+\item A taxi is stored in one and only one queue.
+\item A taxi has one and only one status.
+\end{enumerate}
+Domain properties:
+\begin{enumerate}[label=(\alph*)]
+\item A queue is associated to one and only one zone
+\end{enumerate}
+
+
+\item {[4.2.3]} Manage a ride notification...\\
+ Requirements:\\
+ (b) The taxi driver must answer the call otherwise after 15 seconds the call is automatically refused.
+
+\end{itemize}
+
+
 
 \end{document}
 

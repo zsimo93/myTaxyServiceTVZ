@@ -1,0 +1,51 @@
+% --------------------------------------------------
+% PLEASE REMEMBER TO UPDATE TIME SPENT IN time.tex
+% --------------------------------------------------
+
+\section{Introduction}
+
+\subsection{Purpose}
+This document has the \textbf{goal} of providing an overall and complete description of \textit{myTaxiService}'s software architectural design together with algorithms and UI.\\
+The intended audience of this document are project managers and software developers.
+
+\subsection{Scope}
+\textit{myTaxiService} is an application born to support an existing taxi company, especially to simplify passengers' access to the service and guarantee a fair management of taxi queues. In fact it will be GPS-based and it will be able to assign a taxi to a certain call, based on the location of the taxi and of the requesting passenger, in order to minimize the waiting time.\\
+It will also provide an option to reserve a taxi in advance and to share the ride with other passengers to save money. All these features will be available via a freely downloadable mobile application or a web application.\\
+It will also provide an interface for the taxi drivers, in order to communicate with them more easily and to make them able to automatically share their location over time.
+
+\subsection{Definitions, Acronyms, Abbreviations}
+
+\subsubsection{Definitions}
+\begin{itemize}
+\item \textbf{Dynamic queue}: it is a list of taxis which is created whenever a request must be managed.
+\item \textbf{Static queue}: it is a list of taxis which is associated to every zones. 
+\end{itemize}
+
+\subsubsection{Acronyms \& Abbreviations}
+\begin{itemize}
+\item \textbf{UML}: Unified Modeling Language
+\item \textbf{API}: Application Programming Interface
+\item \textbf{MVC}: Model - View - Controller
+\item \textbf{DTO}: Data Transfer Object
+\item \textbf{PSP}: Payment Service Provider
+\end{itemize}
+
+
+\subsection{Document Structure}
+The document divides into 5 parts:
+\begin{itemize}
+
+\item Section 1: \textbf{Introduction}. It gives a description of the document underlining his goals and gives basic information about the application.
+
+\item Section 2: \textbf{Architectural Design}. It gives the various architectural views of the application.
+
+\item Section 3: \textbf{Algorithm Design}. It gives some algorithms' descriptions contained in the application.
+
+\item Section 4: \textbf{User Interface Design}. It shows application's mockups.
+
+\item Section 5: \textbf{Requirements Traceability}. It contains solutions to the RASD requirements.
+
+\item Section 6: \textbf{References}. It contains all DD's references.
+
+\end{itemize}
+
