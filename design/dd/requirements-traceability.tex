@@ -1,0 +1,73 @@
+% --------------------------------------------------
+% PLEASE REMEMBER TO UPDATE TIME SPENT IN time.tex
+% --------------------------------------------------
+
+\section{Requirements Traceability}
+
+% How had we solved RASD requirements? [WE ARE LEGION. EXPECT US.]
+\subsection{Visitor requirements}
+\begin{itemize}
+\item \textbf{\textit{Registering}}
+\begin{itemize}
+\item \textit{Visitor must enter a valid email}: the application checks if it's possible to send a message to the specified email.
+\item \textit{Visitor must enter a valid phone number}: the application checks through a line test: an aborted call is made to the subscriber line.
+\item \textit{Visitor must be adult in order to register}: the application checks the age calculating it with the inserted date of birth.
+\end{itemize}
+\end{itemize}
+
+\subsection{Passenger requirements}
+\begin{itemize}
+
+\item \textbf{\textit{Pay with PayPal}}
+\begin{itemize}
+\item \textit{Passenger must have connected his account with PayPal}: the application checks in the database if a passenger is related to a PayPal account.
+\end{itemize}
+
+\item \textbf{\textit{Request a new taxi ride}}
+\begin{itemize}
+\item \textit{A passenger must have not requested another taxi at the same time}: the application has the list of current active requests and they must be related to different passenger. During a new reservation's creation, the application checks if there are reservations for the same time and it denies the creation of it if one belongs to the same passenger.
+\end{itemize}
+
+\item \textbf{\textit{Look rides log}}
+\begin{itemize}
+\item \textit{Passenger must have booked at least one ride}: the application looks in the passenger's ride, reservations and requests lists and if there are no element linked to the passenger, then it denied this functionality.
+\end{itemize}
+\end{itemize}
+
+\subsection{Taxi driver requirements}
+\begin{itemize}
+\item \textbf{\textit{Manage a ride notification}}
+\begin{itemize}
+\item \textit{The taxi related to the driver is not busy or shared}: the application checks if the taxi's status related to the driver isn't busy or shared. In fact every taxi has a status attribute.
+\item \textit{The taxi driver must answer the call otherwise after 15 seconds the call is automatically refused}: the application starts a timer when it sends the request to the taxi driver. If it doesn't receive an answer, it considers the request as refused.
+\end{itemize}
+
+\item \textbf{\textit{Manage a ride notification - Accept a shared ride notification}}
+\begin{itemize}
+\item \textit{No passenger must be in the car. Besides the first shared ride notification, the others are automatically accepted until the end
+of the ride}: the application checks the taxi's status; it must be \textit{free}.
+\end{itemize}
+
+\item \textbf{\textit{Manage a ride notification - Decline a ride notification}}
+\begin{itemize}
+\item \textit{Taxi must not be shared}: the application checks the taxi's status; it must be not \textit{shared}.
+\end{itemize}
+
+\item \textbf{\textit{Start a ride}}
+\begin{itemize}
+\item \textit{There must be a pending request from the passenger}: the application checks if there is a ride linked to the taxi with the ride's timer not already started.
+\end{itemize}
+
+\item \textbf{\textit{Finish a ride}}
+\begin{itemize}
+\item \textit{The taxi related to the taxi driver is busy or shared}: the application checks the taxi's status; it must be \textit{busy} or \textit{shared}.
+\item \textit{The ride must have been started}: the application checks if there is a ride linked to the taxi with the ride's timer already started.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Queue management requirements}
+\begin{itemize}
+\item \textit{A taxi is stored in one and only one queue}: the application checks the queues and verifies they don't contain taxi duplicates.
+\item \textit{A taxi has one and only one status}: every taxi has only a status attribute.
+\end{itemize}
