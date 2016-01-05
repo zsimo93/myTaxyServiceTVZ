@@ -1,0 +1,13 @@
+\begin{itemize}
+\item [57-59.] In the methods analyzed only one file is used, at \textit{line 1604}.
+It is then opened in an InputSource but never closed because the InputSource element is returned as the result of the method. The file is not scanned so the EOF condition is not used.
+
+
+\begin{comment}Files are properly declared but no files are opened.
+\item [58.] In the methods analyzed no files are opened and scanned, but only retrieved and instantiated.
+\item [59.] No EOF condition is used because no entire files are scanned.
+\end{comment}
+
+
+\item [60.] At \textit{line 1630} a generic exception is caught for every exception in reading a file. It is re-thrown by the method as a SAXException. 
+\end{itemize}

@@ -1,0 +1,12 @@
+\begin{itemize}
+\item[44.] "The term \textit{brute force} refers to solutions where someone applies an obvious but excessive technique when more refined and effective alternatives are available. ". \\
+Given this definition, the analyzed code has generated many concerns.\\
+From a very basic analysis the code looks not so bad, because it strongly relies on framework methods and therefore avoids to redefine methods to handle already solved problems.\\
+However some design problmes will be discussed later. 
+\item[45.] Computations order is correct, so is parenthesizing.
+\item[46.] There are really few calculations. So there are no operator precedence issues, neither divisions, nor integer arithmetic in general is used.
+\item [49.] Boolean operators are always used in either \textit{if} or \textit{for} conditions. In most cases comparison operator are used, such as == or != to check if an extracted node is whether null or not. \textit{Lines 1322,1329,1335,1340,1347,1350,1353.}\\ Other comparison operators, such as $<$, are used in \textit{for} statements as termination conditions to scan the whole collection in object. \textit{Lines 1342,1408,1578}.\\Other Boolean operators, such as \&\&, are used in \textit{lines 1350,1353,1365,1368,1587}.\\ All the operators are used in the correct way and with a correct behaviour.
+\item [50.] At \textit{line 1630} in the catch field a generic SAXException is thrown and the real exception is hidden. This is not good practice.
+\item [51.] At \textit{lines 1354,1369} String object are automatically converted to Object and passed as parameters to the put method.
+
+\end{itemize}
