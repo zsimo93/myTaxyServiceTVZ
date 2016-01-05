@@ -1,0 +1,68 @@
+
+\documentclass{article}
+\usepackage{graphicx}
+\graphicspath{ {figures/} }
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[paper size={180mm, 240mm},left=25mm,right=25mm,top=35mm,bottom=25mm,nohea d]{geometry}
+\usepackage{tabularx}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pdflscape}
+
+\newenvironment{myfontAPI}{\fontfamily{LinuxBiolinumT-OsF}\selectfont}{\par}
+
+%\renewcommand{\familydefault}{\sfdefault}%
+
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+    #2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup
+}
+\makeatother
+
+\title{ Code Inspection Document  
+\\ ``MyTaxiService'' Application
+\\ A.Y. 2015 - 2016 }
+
+\author{Ennio Visconti (mat. 790382)
+\\ Simone Zocchi (mat. 852910)
+\\ Khanh Huy Paolo Tran (mat. 852496)}
+
+\date{\today}
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+    #2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup
+}
+\makeatother
+
+\bibliographystyle{plain}
+
+\begin{document}
+   
+    \begin{titlepage}
+        \maketitle 
+        \vfill
+        \centerline{\includegraphics[scale=0.5]{LogoPolimi}}
+        \vfill
+        \vfill
+    \end{titlepage}
+
+        
+    \tableofcontents
+
+\include{introduction}
+
+\include{functional-description}
+
+\include{issues-analysis}
+
+\end{document}

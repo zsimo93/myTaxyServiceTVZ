@@ -1,0 +1,12 @@
+\begin{itemize}
+\item [25.]  A first comment with the explanation of the class is present, followed by the package location and the import statements. The documentation comment is present but is very short and not complete.\\
+As the class is an implementation of EntityResolver interface, the implementation comment should be provided but it is not present.\\
+Class (static) variables and instance variables are grouped but placed in the wrong order, firstly are placed the instance variables and then the class ones.\\
+After that, methods are placed but, at the end of the document, they are mixed with the declarations of two inner classes.
+\item [26.] The methods are not properly grouped by accessibility, for instance the most of the public methods are placed at the beginning of the class and a few of them are at the end.
+They seems to be grouped by functionality, in fact there is a set of methods for generate resources, followed by some getter methods.
+\item [27.] Methods \textit{generateWorkSecurityMap}, \textit{generateSecurityMap} and \textit{resolveEntity} are a little bit too long.\\
+Encapsulation is preserved.\\
+\textit{generateWorkSecurityMap} has an \textit{else if} which does basically the same thing as the precondition, but with a different node, so there are duplicated code lines. \textit{Lines 1344-1374}\\
+In addition inside \textit{resolveEntity} there is a checking command repeated many times ( \textit{if(\_logger.isLoggable(Level.FINEST))} ). \textit{Lines 1601, 1606, 1611, 1619, 1625}.
+\end{itemize}
