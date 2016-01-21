@@ -1,0 +1,264 @@
+\section{Individual Steps and Test Description}
+\subsection{Component Integration}
+
+{\renewcommand{\arraystretch}{1.5}
+
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & HP.1\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Request manager $\rightarrow$ Taxi queue manager\\
+    \hline 
+    
+    \textbf{Input Specification} & A request from the queue is taken in charge.\\
+    \hline 
+    
+    \textbf{Output Specification} & The correct methods in \textit{Taxi queue manager} are invoked. A taxi is correctly returned and its state is set as expected. \\
+    \hline 
+    
+    \textbf{Environmental Needs} & Taxi instances must be available to be exploited.  \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & HP.2\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Ride manager $\rightarrow$ Taxi queue manager\\
+    \hline 
+    
+    \textbf{Input Specification} & A ride which needs to start.\\
+    \hline 
+    
+    \textbf{Output Specification} & The state of the taxi is correctly modified according to the previous state and the one indicated.\\
+    \hline 
+    
+    \textbf{Environmental Needs} & The passenger and the taxi driver must be willing to terminate the ride.\\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & HP.3\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Ride manager $\rightarrow$ Payment manager\\
+    \hline 
+    
+    \textbf{Input Specification} & A fare request is sent. \\
+    \hline 
+    
+    \textbf{Output Specification} & The correct fare is calculated by \textit{Payment manager} and is returned. \\
+    \hline 
+    
+    \textbf{Environmental Needs} & A ride must be finished and available.  \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & MP.1\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Taxi queue manager $\rightarrow$ Zone manager\\
+    \hline 
+    
+    \textbf{Input Specification} & A location of a request is sent to the \textit{Taxi queue manager}. \\
+    \hline 
+    
+    \textbf{Output Specification} & A list of the taxis of the proper zone around the given location is returned. \\
+    \hline 
+    
+    \textbf{Environmental Needs} & Zone and Taxi data should be available to be retrieved. \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & MP.2\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Taxi queue manager $\rightarrow$ Path calculator\\
+    \hline 
+    
+    \textbf{Input Specification} & A request for a shared ride.\\
+    \hline 
+    
+    \textbf{Output Specification} &  Returns the path a taxi must follow to accomplish correctly a shared ride request.\\
+    \hline 
+    
+    \textbf{Environmental Needs} &  Taxi states must not change during path calculator's execution. Entry Criterion 2 must be respected.\\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & LP.1.1\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Communication Manager $\rightarrow$ Request Manager\\
+    \hline 
+    
+    \textbf{Input Specification} & There is a new request ready to be enqueued. \\
+    \hline 
+    
+    \textbf{Output Specification} & The new incoming request is properly enqueued according to its type: request or reservation.    \\
+    \hline 
+    
+    \textbf{Environmental Needs} & The  queue to handle the reservations must be implemented. \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & LP.1.2\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Communication Manager $\leftarrow$ Request Manager\\
+    \hline 
+    
+    \textbf{Input Specification} & A positive response arrives from the Driver of a matching taxi. \\
+    \hline 
+    
+    \textbf{Output Specification} & The request for the taxi driver is created and dispatched to the proper client. A notification for the Passenger is created and dispatched to the proper client. In particular the proper message is created.   \\
+    \hline 
+    
+    \textbf{Environmental Needs} &  N/A \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & LP.2\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Communication manager $\rightarrow$ Ride manager\\
+    \hline 
+    
+    \textbf{Input Specification} &  Messages for starting and endind a ride.\\
+    \hline 
+    
+    \textbf{Output Specification} &  The beginning and ending time are set in the relative Ride entity.\\
+    \hline 
+    
+    \textbf{Environmental Needs} & N/A \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & LP.3\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Communication manager $\rightarrow$ Zone manager\\
+    \hline 
+    
+    \textbf{Input Specification} & Updated position of a taxi. \\
+    \hline 
+    
+    \textbf{Output Specification} & Related zone queue is updated properly. \\
+    \hline 
+    
+    \textbf{Environmental Needs} & Taxi entity must be present to be updated.  \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & RLP.1\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Path calculator $\rightarrow$ Google Maps\\
+    \hline 
+    
+    \textbf{Input Specification} & A path (with start and end locations) is given.\\
+    \hline 
+    
+    \textbf{Output Specification} & Intermediate nodes of the given path are returned. \\
+    \hline 
+    
+    \textbf{Environmental Needs} &  N/A \\
+    \hline
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & RLP.2\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Payment manager $\rightarrow$ PayPal\\
+    \hline 
+    
+    \textbf{Input Specification} & Payment data. \\
+    \hline 
+    
+    \textbf{Output Specification} & Completed transaction is returned. \\
+    \hline 
+    
+    \textbf{Environmental Needs} & A completed ride is needed.  \\
+    \hline
+
+\end{tabularx}}
+
+\subsection{Subsystem Integration}
+
+{\renewcommand{\arraystretch}{1.5}
+
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & S.1\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Back End $\rightarrow$ Data Abstraction Layer\\
+    \hline 
+    
+    \textbf{Input Specification} & Commands of Insert, Delete or Update are sent to DB. \\
+    \hline 
+    
+    \textbf{Output Specification} & Tuples are correctly inserted, deleted or modified in the DB. \\
+    \hline 
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & S.2\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Common Front End Layer $\leftrightarrow$ Web \& Mobile\\
+    \hline 
+    
+    \textbf{Input Specification} & Notification and messages to be elaborated and displayed.\\
+    \hline 
+    
+    \textbf{Output Specification} & Incoming messages are interpreted in the proper way.\\
+    \hline 
+
+\end{tabularx}
+\\ \\ \\
+\begin{tabularx}{\textwidth}{l X}
+    \hline 
+    \textbf{Test Case Identifier} & S.3\\ 
+    \hline 
+    
+    \textbf{Test Item(s)} & Back End $\leftrightarrow$ Common Front End Layer\\
+    \hline 
+    
+    \textbf{Input Specification} & Messages and notifications to be dispatched.\\
+    \hline 
+    
+    \textbf{Output Specification} & The communications are correctly dispathed to the right client.\\
+    \hline 
+\end{tabularx}}

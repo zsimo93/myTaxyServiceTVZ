@@ -16,6 +16,12 @@ Software Engineering 2 project
 * Paolo : ~29h
 
 #Time Spent for Code Inspection Document 
-* Ennio : ~13
+* Ennio : ~13h
 * Simone : ~13h
 * Paolo : ~8h
+
+#Time Spent for Integration Testing Plan Document 
+* Ennio : ~8.30h
+* Simone : ~8.15h
+* Paolo : ~3.30h
+

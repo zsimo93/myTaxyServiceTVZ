@@ -1,0 +1,76 @@
+\section{Integration Strategy}
+
+\subsection{Entry Criteria}
+\begin{enumerate}
+    \item Unit tests executed for Path Calculator, Payment Manager and Zone Manager components that are important from an algorithmic point of view.
+    \item Sample data must be in the Database, containing examples of zones, taxis and shared rides, in order to make the algorithm be executed correctly.
+\end{enumerate}
+
+\subsection{Elements to be integrated}
+Our architectural description highlighted five main subsystem, divided between client and server. The most important one is the "BackEnd" subsystem, which contains all the business component of the application. This subsystem must be integrated with the "Data Abstraction Layer" and with the Client side, in particular with the "Common Front End Layer", and the last one must be, in turn, integrated with the "Mobile" and "Web" subsystems.\\
+The subsystems of the client side will not be deeply analyzed because they deal with topics that are not relevant for this course. For this reason we will consider, mainly, the components of the "BackEnd" subsystem.\\
+The components we will take into account are: Authentication manager, Communication manager, Payments manager, Taxi queue manager, Rides manager, Request manager, Path calculator and Zone manager.
+
+\subsection{Integration Testing Strategy}
+
+The component structure identified in the DD is not a tree structure that allows a top down or bottom up strategy for the integration. Instead we selected the most critical components of the application both from the algorithmic perspective and from the role they have inside the application execution process.\\
+
+While algorithmic-critical components don't concern the integration issue much because they can be easily replaced by stubs, key-role ones are much more relevant.\\  
+
+The two riskiest modules identified also belong to two different execution threads. So while starting with these components, we will integrate others less crucial which also belong to the same thread.
+
+Furthermore, to make sure that effective development flow doesn't create too much diverging items, different periodic integration cycles should be followed, as described in Figure \ref{fig:IntegrationCycle}, in order to deal with those problems as soon as they appear, but not in a time consuming way as it is if integrating the whole project every time something new is added.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{IntegrationCycle}
+    \caption{Integration Phases Cycle}
+    \label{fig:IntegrationCycle}
+\end{figure}
+
+% - Critical Strategy with a thread - bottom up orientation. - %
+We decided to use an approach based on the critical modules. 
+
+\newpage
+\subsection{Sequence of Component/Function Integration}
+
+    \subsubsection{Software Integration Sequence}
+    
+    The interactions between backend components we are going to test are the following in this order:
+    
+    \paragraph{High Priority [HP]}
+    \begin{enumerate}
+        \item \textit{Request manager} $ \longleftrightarrow $ \textit{Taxi queue manager} (findTaxi() and changeTaxiState() methods)
+        \item \textit{Ride manager} $ \longleftrightarrow $ \textit{Taxi queue manager} (changeTaxiState() method)
+        \item \textit{Ride manager} $ \longleftrightarrow $ \textit{Payment manager} (calculateFare() and payPalPayment() methods)
+    \end{enumerate}
+    
+    \paragraph{Medium Priority [MP]}
+    \begin{enumerate}
+        \item \textit{Taxi queue manager} $ \longleftrightarrow $ \textit{Zone manager} (findQueue() method)
+        \item \textit{Taxi queue manager} $ \longleftrightarrow $ \textit{Path calculator} (pathCalculation() method)
+    \end{enumerate}
+
+    \paragraph{Low Priority [LP]}
+    \begin{enumerate}
+        \item \textit{Communication manager} $ \longleftrightarrow $ \textit{Request manager} (enqueueRequest() method; dispatchResponses() and dispatchToPassenger() on the other way)
+        \item \textit{Communication manager} $ \longleftrightarrow $ \textit{Ride manager} (start(ride) and end(ride) methods)
+        \item \textit{Communication manager} $ \longleftrightarrow $ \textit{Zone manager} (updateTaxiPosition() method)
+    \end{enumerate}
+    
+    \paragraph{Really Low Priority [RLP]}
+    \begin{enumerate}
+        \item \textit{Path calculator} $ \longleftrightarrow $ \textit{Google Maps} (usage of GoogleMaps API)
+        \item \textit{Payment manager} $ \longleftrightarrow $ \textit{PayPal} (usage of PayPal API)
+    \end{enumerate}
+    
+\newpage
+    \subsubsection{Subsystem Integration Sequence}
+    Since the architectural design pattern chosen at design time is a Client-Server pattern, subsystem integration can start in parallel both from the client-side and from the server-side. The integration order for the subsystems is the one described in the picture below.
+    
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\columnwidth]{SubsystemIntegration}
+        \caption{Subsystem Integration Sequence}
+        \label{fig:SubsystemIntegration}
+    \end{figure}
