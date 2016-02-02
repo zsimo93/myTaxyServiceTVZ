@@ -1,0 +1,45 @@
+\section{Risks identification}
+
+{\renewcommand{\arraystretch}{1.5}
+
+\begin{tabularx}{\textwidth}{| c  X | l | l|}
+    \hline 
+       & \textbf{Risk}                                                          & \textbf{Probability}  & \textbf{Effect}\\ 
+    \hline 
+    
+    R1 & Member of the group are ill and this will cause a shift in the plan.   & Moderate       & Marginal\\
+    \hline
+    R2 & Change in requirements and design are proposed.                        & Moderate       & Critical\\
+    \hline
+    R3 & Architectural components cannot support the load of requests.          & Low            & Critical\\
+    \hline
+    R4 & Faults in external components used (i.e. Google Maps, PayPal)          & Low            & Catastrophic\\
+    \hline
+    R5 & Faults in architectural components                                     & Low            & Catastrophic\\
+    \hline
+    R6 & Underestimate development time                                         & Moderate       & Serious\\
+    \hline
+    
+    
+\end{tabularx}
+\begin{tabularx}{\textwidth}{|c | X|}
+    \hline 
+    \textbf{Risk} & \textbf{Recovery Action}\\ 
+    \hline 
+    
+    R1 & Organize tasks in resource allocation so that more overlapping are present. \\
+    \hline
+    R2 & Make a clear and traceable RASD and DD and project a flexible architecture, so that changing are less effective.\\
+    \hline
+    R3 & Project the physical architecture of the system so that it can be distributed and easily expandable. \\
+    \hline
+    R4 & Take into account different alternatives for external components and implement different interfaces for the different ones. It will be possible to change the components used easily.\\
+    \hline
+    R5 & Consider the possibility of redundancy of the most critical architectural components (for example Open Street Maps instead of Google Maps and Skrill instead of PayPal).\\
+    \hline
+    R6 & Investigate the possibility to buy already done component to be integrated in the application and not implemented from scratch.\\
+    \hline
+    
+\end{tabularx}
+
+}

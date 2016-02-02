@@ -1,0 +1,81 @@
+\section{Tasks identification}
+In this section the main tasks of the project will be described with related duration and dependencies. Tasks are divided in terms of the activity (or super-task) they are related to and some milestones, described with deliveries versioning) are set.\\
+\textit{Note: versions are also tracked as "releases" on the \href{https://github.com/zsimo93/myTaxyServiceTVZ}{GitHub repository}}. \\
+
+\subsection{Requirement Analysis \& Specification}
+{\renewcommand{\arraystretch}{1.2}
+
+\begin{tabularx}{\textwidth}{|l X |l| l|}
+    \hline 
+    & \textbf{Task} & \textbf{Duration (days)}    & \textbf{Dependencies}     \\ 
+    \hline 
+    
+    \rownumber & Scenarios identification            & 5  &     \\ \hline
+    \rownumber & Goals collection                    & 10 & 1   \\ \hline
+    \rownumber & Constraints analysis                & 10 & 1   \\ \hline 
+    \rownumber & Interface requirements collection   & 7  & 2,3 \\ \hline 
+    \rownumber & Functional requirements collection  & 7  & 2,3 \\ \hline 
+    \rownumber & Use cases writing                   & 4  & 1   \\ \hline 
+    \rownumber & Alloy verification                  & 4  & 5   \\ \hline
+    
+    % Milestone 1: RASD (v. 0.1)
+    \textbf{v.0.1} & \textbf{Milestone: RASD}        &    &     \\ \hline
+    
+    \caption{Requirements Analysis \& Specification Tasks}\label{tab:rasd-tasks}\\    
+\end{tabularx}
+
+
+\subsection{Design \& Architecture Development}
+{\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l X |l| l|}
+    \hline 
+    & \textbf{Task} & \textbf{Duration (days)}    & \textbf{Dependencies}      \\ 
+    \hline 
+    
+    \rownumber & Main blocks design and definition                  & 2 &      \\ \hline 
+    \rownumber & Front end components definition                    & 7 & 8    \\ \hline 
+    \rownumber & Back end components definition                     & 7 & 8    \\ \hline 
+    \rownumber & Architectural styles and design patterns selection & 5 & 9,10 \\ \hline
+    \rownumber & Components interfaces and Public API design        & 7 & 10   \\ \hline 
+    \rownumber & Requests handling analysis                         & 5 & 11   \\ \hline 
+    \rownumber & Request arrival and ride notification analysis     & 5 & 11   \\ \hline 
+    \rownumber & Fare algorithm design                              & 4 &      \\ \hline 
+    \rownumber & Shared request algorithm design                    & 8 & 13   \\ \hline 
+    
+    % Milestone 2: DD (v. 0.2)
+    \textbf{v.0.2} & \textbf{Milestone: DD}                         &   &      \\ \hline
+    
+    \caption{Design \& Architecture Development Tasks}\label{tab:dd-tasks}\\
+\end{tabularx}}
+
+\subsection{Implementation \& Testing}
+{\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l X |l| l|}
+    \hline 
+    & \textbf{Task} & \textbf{Duration (days)}    & \textbf{Dependencies}     \\ 
+    \hline 
+    
+    \rownumber & Personal tools and workspace setup           &  2  &       \\ \hline 
+    \rownumber & Integration plan definition                  &  7  & 17    \\ \hline
+    \rownumber & Team toolset initialization                  &  3  & 17,18 \\ \hline
+    
+    % Milestone 3: ITPD (v. 0.3)
+    \textbf{v.0.3} & \textbf{Milestone: ITPD}                 &     &    \\ \hline
+    
+    \rownumber & Units development and testing                & 60  & 19 \\ \hline 
+    \rownumber & Algorithms implementation                    & 15  & 19 \\ \hline
+    \rownumber & Subsystem integration testing                & 20  & 20 \\ \hline
+    \rownumber & System integration testing                   & 30  & 22 \\ \hline
+    
+    % Milestone 4: Implementation (v. 1.0)
+    \textbf{v.1.0} & \textbf{Milestone: First Release}         &     &    \\ \hline
+    
+    \caption{Implementation \& Testing Tasks}\label{tab:itpd-tasks}\\
+\end{tabularx}}
+
+\subsection{Project Scheduling}
+The Gantt chart with the scheduling of the project is available here:
+\href{https://app.ganttpro.com/shared/token/c77f8506cec4fe6fe99a4299007540715c25ffefccfc4745993b29d11b9eb74e}{\textit{Gantt chart}}
+
+\newpage
+\textit{}
