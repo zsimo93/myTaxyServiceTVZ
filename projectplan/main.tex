@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage{graphicx}
+\graphicspath{ {figures/} }
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[paper size={180mm, 240mm},left=25mm,right=25mm,top=35mm,bottom=25mm,nohea d]{geometry}
+\usepackage{tabularx}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\usepackage{ltablex}
+
+\usepackage{mdframed}
+\usepackage{xcolor}
+\surroundwithmdframed[
+    hidealllines=true,
+    backgroundcolor=black!20,
+    skipbelow=\baselineskip,
+    skipabove=\baselineskip
+]{equation}
+
+\usepackage{array}
+\newcounter{rowcount}
+\setcounter{rowcount}{0}
+\newcommand\rownumber{\stepcounter{rowcount}\therowcount.}
+
+%\renewcommand{\familydefault}{\sfdefault}%
+
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+    #2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup
+}
+\makeatother                                                               
+
+\title{ Project Plan  
+\\ ``MyTaxiService'' Application
+\\ A.Y. 2015 - 2016 }
+
+\author{Ennio Visconti (mat. 790382)
+\\ Simone Zocchi (mat. 852910)
+\\ Khanh Huy Paolo Tran (mat. 852496)}
+
+\date{\today}
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+    #2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup
+}
+\makeatother
+
+\bibliographystyle{plain}
+
+\begin{document}
+   
+    \begin{titlepage}
+        \maketitle 
+        \vfill
+        \centerline{\includegraphics[scale=0.5]{LogoPolimi}}
+        \vfill
+        \vfill
+    \end{titlepage}
+
+        
+    \tableofcontents
+
+\include{introduction}
+
+\include{FP}
+
+\include{COCOMO}
+
+\include{tasks}
+
+\include{resourceAllocation}
+
+\include{risks}
+
+\end{document}
