@@ -1,27 +1,33 @@
 # myTaxiServiceTVZ
 Software Engineering 2 project
 
+#Summary of the time spent on the project
+* Ennio : ~84.30h
+* Simone : ~91.15h
+* Paolo : ~71.30h
 
-
-
-
-#Time Spent for RASD
+#Detailed per-document description
+##Time spent on RASD
 * Ennio : ~25h
 * Simone : ~28h
 * Paolo : ~28h
 
-#Time Spent for DD
+##Time spent on DD
 * Ennio : ~30h
 * Simone : ~35h
 * Paolo : ~29h
 
-#Time Spent for Code Inspection Document 
+##Time spent on Code Inspection Document 
 * Ennio : ~13h
 * Simone : ~13h
 * Paolo : ~8h
 
-#Time Spent for Integration Testing Plan Document 
+##Time spent on Integration Testing Plan Document 
 * Ennio : ~8.30h
 * Simone : ~8.15h
 * Paolo : ~3.30h
 
+##Time spent on Integration Testing Plan Document 
+* Ennio : ~8h 84.30
+* Simone : ~7h 91.15
+* Paolo : ~3h 71.30
