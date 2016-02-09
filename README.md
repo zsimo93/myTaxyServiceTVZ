@@ -22,12 +22,12 @@ Software Engineering 2 project
 * Simone : ~13h
 * Paolo : ~8h
 
-##Time spent on Project Plan Document 
+##Time spent on Integration Testing Plan Document 
 * Ennio : ~8.30h
 * Simone : ~8.15h
 * Paolo : ~3.30h
 
-##Time spent on Integration Testing Plan Document 
-* Ennio : ~8h 84.30
-* Simone : ~7h 91.15
-* Paolo : ~3h 71.30
+##Time spent on Project Plan Document 
+* Ennio : ~8h
+* Simone : ~7h
+* Paolo : ~3h
